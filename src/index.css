@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+@import 'katex/dist/katex.min.css';
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #0b1220;
+  color: #e5e7eb;
+  font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* 数值等宽显示，便于对齐读数 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 输入控件统一样式 */
+input[type='number'],
+input[type='text'],
+select {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #e5e7eb;
+  padding: 6px 10px;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type='number']:focus,
+input[type='text']:focus,
+select:focus {
+  border-color: #22d3ee;
+}
+input[type='range'] {
+  width: 100%;
+  accent-color: #22d3ee;
+}
+
+/* KaTeX 在深色背景下的对比度 */
+.katex {
+  color: #e5e7eb;
+}
