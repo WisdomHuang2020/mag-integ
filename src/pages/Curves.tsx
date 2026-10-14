@@ -85,11 +85,11 @@ export default function Curves() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <header className="mb-6">
-        <h1 className="text-xl font-semibold text-slate-100">磁件特性曲线</h1>
-        <p className="mt-2 text-[12px] leading-relaxed text-slate-400">
-          只画磁件自身的规律：<strong className="text-slate-300">调绕组间距 → 漏感怎么变</strong>、
-          <strong className="text-slate-300">调气隙 → 电感怎么变</strong>、
-          <strong className="text-slate-300">升频率 → 交流电阻怎么涨</strong>。
+        <h1 className="text-xl font-semibold text-neutral-100">磁件特性曲线</h1>
+        <p className="mt-2 text-[12px] leading-relaxed text-neutral-400">
+          只画磁件自身的规律：<strong className="text-neutral-300">调绕组间距 → 漏感怎么变</strong>、
+          <strong className="text-neutral-300">调气隙 → 电感怎么变</strong>、
+          <strong className="text-neutral-300">升频率 → 交流电阻怎么涨</strong>。
           LLC 的增益曲线与阻抗相位属于电路侧内容，请见参考站。
         </p>
       </header>
@@ -115,12 +115,12 @@ export default function Curves() {
       >
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={gapSweep} margin={{ top: 10, right: 20, bottom: 6, left: -14 }}>
-            <CartesianGrid stroke="#1e293b" strokeDasharray="3 3" />
-            <XAxis dataKey="d12" type="number" domain={[0.1, 2]} stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: '原副边间距 d₁₂ (mm)', position: 'insideBottomRight', offset: -2, fill: '#64748b', fontSize: 11 }} />
-            <YAxis stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: 'Lk (µH)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
+            <CartesianGrid stroke="#262626" strokeDasharray="3 3" />
+            <XAxis dataKey="d12" type="number" domain={[0.1, 2]} stroke="#737373" tick={{ fontSize: 11 }} label={{ value: '原副边间距 d₁₂ (mm)', position: 'insideBottomRight', offset: -2, fill: '#737373', fontSize: 11 }} />
+            <YAxis stroke="#737373" tick={{ fontSize: 11 }} label={{ value: 'Lk (µH)', angle: -90, position: 'insideLeft', fill: '#737373', fontSize: 11 }} />
             <Tooltip
-              contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }}
-              labelStyle={{ color: '#94a3b8' }}
+              contentStyle={{ background: '#171717', border: '1px solid #404040', borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: '#a3a3a3' }}
               formatter={(v: number) => [`${v} µH`, 'Lk']}
               labelFormatter={(v) => `d₁₂ = ${v} mm`}
             />
@@ -130,7 +130,7 @@ export default function Curves() {
               strokeDasharray="5 4"
               label={{ value: `所需 Lr ≈ ${lrTarget} µH`, fill: '#f59e0b', fontSize: 10, position: 'insideTopRight' }}
             />
-            <Line type="monotone" dataKey="lk" stroke="#22d3ee" strokeWidth={2.2} dot={false} />
+            <Line type="monotone" dataKey="lk" stroke="#14b8a6" strokeWidth={2.2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </Panel>
@@ -141,21 +141,21 @@ export default function Curves() {
       >
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={gapInductance} margin={{ top: 10, right: 20, bottom: 6, left: -14 }}>
-            <CartesianGrid stroke="#1e293b" strokeDasharray="3 3" />
-            <XAxis dataKey="lg" type="number" domain={[0, 5]} stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: '气隙 lg (mm)', position: 'insideBottomRight', offset: -2, fill: '#64748b', fontSize: 11 }} />
-            <YAxis stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: 'L (µH)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
+            <CartesianGrid stroke="#262626" strokeDasharray="3 3" />
+            <XAxis dataKey="lg" type="number" domain={[0, 5]} stroke="#737373" tick={{ fontSize: 11 }} label={{ value: '气隙 lg (mm)', position: 'insideBottomRight', offset: -2, fill: '#737373', fontSize: 11 }} />
+            <YAxis stroke="#737373" tick={{ fontSize: 11 }} label={{ value: 'L (µH)', angle: -90, position: 'insideLeft', fill: '#737373', fontSize: 11 }} />
             <Tooltip
-              contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }}
-              labelStyle={{ color: '#94a3b8' }}
+              contentStyle={{ background: '#171717', border: '1px solid #404040', borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: '#a3a3a3' }}
               formatter={(v: number, n: string) => [`${v} µH`, n === 'main' ? '主磁芯' : '副磁芯']}
               labelFormatter={(v) => `lg = ${v} mm`}
             />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#94a3b8' }} formatter={(v: string) => (v === 'main' ? '主磁芯（锁 Lm）' : '副磁芯（调 Lr）')} />
+            <Legend wrapperStyle={{ fontSize: 11, color: '#a3a3a3' }} formatter={(v: string) => (v === 'main' ? '主磁芯（锁 Lm）' : '副磁芯（调 Lr）')} />
             <Line type="monotone" dataKey="main" stroke="#ef4444" strokeWidth={2} dot={false} />
             <Line type="monotone" dataKey="aux" stroke="#14b8a6" strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
-        <p className="mt-1 text-[11px] text-slate-500">
+        <p className="mt-1 text-[11px] text-neutral-500">
           注意气隙越大电感下降越快，且 0 附近极陡——这正是「副磁芯气隙用于精细调节 Lr」的原因。
         </p>
       </Panel>
@@ -166,21 +166,21 @@ export default function Curves() {
       >
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={frSweep} margin={{ top: 10, right: 20, bottom: 6, left: -14 }}>
-            <CartesianGrid stroke="#1e293b" strokeDasharray="3 3" />
-            <XAxis dataKey="f" type="number" domain={[20, 500]} stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: '频率 f (kHz)', position: 'insideBottomRight', offset: -2, fill: '#64748b', fontSize: 11 }} />
-            <YAxis yAxisId="l" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: 'Fr = Rac/Rdc', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 11 }} />
-            <YAxis yAxisId="r" orientation="right" stroke="#64748b" tick={{ fontSize: 11 }} label={{ value: 'Δ = h/δ', angle: 90, position: 'insideRight', fill: '#64748b', fontSize: 11 }} />
+            <CartesianGrid stroke="#262626" strokeDasharray="3 3" />
+            <XAxis dataKey="f" type="number" domain={[20, 500]} stroke="#737373" tick={{ fontSize: 11 }} label={{ value: '频率 f (kHz)', position: 'insideBottomRight', offset: -2, fill: '#737373', fontSize: 11 }} />
+            <YAxis yAxisId="l" stroke="#737373" tick={{ fontSize: 11 }} label={{ value: 'Fr = Rac/Rdc', angle: -90, position: 'insideLeft', fill: '#737373', fontSize: 11 }} />
+            <YAxis yAxisId="r" orientation="right" stroke="#737373" tick={{ fontSize: 11 }} label={{ value: 'Δ = h/δ', angle: 90, position: 'insideRight', fill: '#737373', fontSize: 11 }} />
             <Tooltip
-              contentStyle={{ background: '#0f172a', border: '1px solid #334155', borderRadius: 8, fontSize: 12 }}
-              labelStyle={{ color: '#94a3b8' }}
+              contentStyle={{ background: '#171717', border: '1px solid #404040', borderRadius: 8, fontSize: 12 }}
+              labelStyle={{ color: '#a3a3a3' }}
               labelFormatter={(v) => `f = ${v} kHz`}
             />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#94a3b8' }} formatter={(v: string) => (v === 'fr' ? '交流因子 Fr' : '穿透率 Δ')} />
+            <Legend wrapperStyle={{ fontSize: 11, color: '#a3a3a3' }} formatter={(v: string) => (v === 'fr' ? '交流因子 Fr' : '穿透率 Δ')} />
             <Line yAxisId="l" type="monotone" dataKey="fr" stroke="#f59e0b" strokeWidth={2.2} dot={false} />
-            <Line yAxisId="r" type="monotone" dataKey="delta" stroke="#64748b" strokeWidth={1.4} strokeDasharray="4 3" dot={false} />
+            <Line yAxisId="r" type="monotone" dataKey="delta" stroke="#737373" strokeWidth={1.4} strokeDasharray="4 3" dot={false} />
           </LineChart>
         </ResponsiveContainer>
-        <p className="mt-1 text-[11px] text-slate-500">
+        <p className="mt-1 text-[11px] text-neutral-500">
           Fr 在 Δ≈1（导体厚度接近趋肤深度）之后开始明显上升。平面变压器要压铜损，就得在这个频率上把箔厚压到 δ 量级。
         </p>
       </Panel>
@@ -190,9 +190,9 @@ export default function Curves() {
 
 function Panel({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
   return (
-    <section className="mt-5 rounded-xl border border-slate-800 bg-slate-900/40 p-4">
-      <h2 className="text-[13px] font-semibold text-slate-200">{title}</h2>
-      {note && <p className="mt-1 mb-3 text-[11px] text-slate-500">{note}</p>}
+    <section className="mt-5 rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
+      <h2 className="text-[13px] font-semibold text-neutral-200">{title}</h2>
+      {note && <p className="mt-1 mb-3 text-[11px] text-neutral-500">{note}</p>}
       {children}
     </section>
   )
@@ -221,13 +221,13 @@ function Controls(props: {
     ['所需 Lr 参考', props.lrTarget, props.setLrTarget, 5, 200, 1, 'µH'],
   ]
   return (
-    <section className="rounded-xl border border-slate-800 bg-slate-900/40 p-4">
-      <div className="text-[11px] font-semibold text-cyan-400/90 mb-3">曲线参数（独立于设计器，便于做单变量扫描）</div>
+    <section className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
+      <div className="text-[11px] font-semibold text-teal-400/90 mb-3">曲线参数（独立于设计器，便于做单变量扫描）</div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {items.map(([label, value, setter, min, max, step, unit]) => (
           <label key={label} className="block">
-            <span className="text-[11px] text-slate-400">
-              {label} <span className="text-slate-600">({value} {unit})</span>
+            <span className="text-[11px] text-neutral-400">
+              {label} <span className="text-neutral-600">({value} {unit})</span>
             </span>
             <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => setter(parseFloat(e.target.value))} />
           </label>

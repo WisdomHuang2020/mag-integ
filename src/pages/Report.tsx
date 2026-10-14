@@ -29,22 +29,22 @@ export default function Report() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <div className="flex items-center justify-between mb-5 print:hidden">
-        <h1 className="text-xl font-semibold text-slate-100">磁件设计报告</h1>
+        <h1 className="text-xl font-semibold text-neutral-100">磁件设计报告</h1>
         <button
           onClick={() => window.print()}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-cyan-500 px-3.5 py-2 text-[12px] font-medium text-slate-950 hover:bg-cyan-400 transition-colors"
+          className="inline-flex items-center gap-1.5 rounded-lg bg-teal-500 px-3.5 py-2 text-[12px] font-medium text-neutral-950 hover:bg-teal-400 transition-colors"
         >
           <Printer size={14} /> 打印 / 存为 PDF
         </button>
       </div>
 
-      <article className="rounded-xl border border-slate-800 bg-slate-900/40 p-6 print:border-slate-300 print:bg-white">
-        <header className="border-b border-slate-800 pb-4 print:border-slate-300">
-          <h2 className="text-lg font-semibold text-slate-100 print:text-black">磁集成 LLC 变压器磁件设计报告</h2>
-          <p className="mt-1 text-[11px] text-slate-500">
+      <article className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 print:border-neutral-300 print:bg-white">
+        <header className="border-b border-neutral-800 pb-4 print:border-neutral-300">
+          <h2 className="text-lg font-semibold text-neutral-100 print:text-black">磁集成 LLC 变压器磁件设计报告</h2>
+          <p className="mt-1 text-[11px] text-neutral-500">
             生成时间：{now} · 工具版本 v0.2.0 · 本地计算，未上传任何数据
           </p>
-          <p className="mt-1 text-[11px] text-slate-500">
+          <p className="mt-1 text-[11px] text-neutral-500">
             范围声明：本报告只覆盖磁件设计（磁路分配 / 气隙 / 漏感 / 匝数 / 损耗）。
             LLC 电路理论、FHA 增益与谐振腔参数选取见参考站 llc.power-knowledge.tech。
           </p>
@@ -75,23 +75,23 @@ export default function Report() {
         <Section title="二、磁路分配（本报告主线）">
           <table className="w-full text-[12px]">
             <tbody>
-              <tr className="border-b border-slate-800/60 print:border-slate-200">
-                <td className="py-1.5 pr-4 text-slate-500 print:text-slate-700 w-[46%]">谐振电感需求 Lr</td>
-                <td className="py-1.5 tabular text-slate-200 print:text-black font-medium">{fmt(t.lr)} µH</td>
+              <tr className="border-b border-neutral-800/60 print:border-neutral-200">
+                <td className="py-1.5 pr-4 text-neutral-500 print:text-neutral-700 w-[46%]">谐振电感需求 Lr</td>
+                <td className="py-1.5 tabular text-neutral-200 print:text-black font-medium">{fmt(t.lr)} µH</td>
               </tr>
-              <tr className="border-b border-slate-800/60 print:border-slate-200">
-                <td className="py-1.5 pr-4 text-slate-500 print:text-slate-700">├ 变压器固有漏感 Lk（由绕组几何决定）</td>
+              <tr className="border-b border-neutral-800/60 print:border-neutral-200">
+                <td className="py-1.5 pr-4 text-neutral-500 print:text-neutral-700">├ 变压器固有漏感 Lk（由绕组几何决定）</td>
                 <td className="py-1.5 tabular text-amber-400 print:text-black">
                   {fmt(m.leakageUh)} µH（占 {(leakageShare * 100).toFixed(1)}%）
                 </td>
               </tr>
-              <tr className="border-b border-slate-800/60 print:border-slate-200">
-                <td className="py-1.5 pr-4 text-slate-500 print:text-slate-700">└ 副磁芯补齐电感 Laux（由副气隙调节）</td>
+              <tr className="border-b border-neutral-800/60 print:border-neutral-200">
+                <td className="py-1.5 pr-4 text-neutral-500 print:text-neutral-700">└ 副磁芯补齐电感 Laux（由副气隙调节）</td>
                 <td className="py-1.5 tabular text-teal-300 print:text-black">{fmt(leakageOver ? 0 : m.auxInductanceUh)} µH</td>
               </tr>
-              <tr className="border-b border-slate-800/60 print:border-slate-200">
-                <td className="py-1.5 pr-4 text-slate-500 print:text-slate-700">励磁电感 Lm（由主磁芯气隙锁定）</td>
-                <td className="py-1.5 tabular text-slate-200 print:text-black font-medium">{fmt(t.lm)} µH</td>
+              <tr className="border-b border-neutral-800/60 print:border-neutral-200">
+                <td className="py-1.5 pr-4 text-neutral-500 print:text-neutral-700">励磁电感 Lm（由主磁芯气隙锁定）</td>
+                <td className="py-1.5 tabular text-neutral-200 print:text-black font-medium">{fmt(t.lm)} µH</td>
               </tr>
             </tbody>
           </table>
@@ -120,7 +120,7 @@ export default function Report() {
         <Section title="四、损耗与效率">
           <table className="w-full text-[12px]">
             <thead>
-              <tr className="text-left text-slate-500 border-b border-slate-800 print:border-slate-300">
+              <tr className="text-left text-neutral-500 border-b border-neutral-800 print:border-neutral-300">
                 <th className="py-1.5 font-medium">分项</th>
                 <th className="py-1.5 font-medium text-right">损耗 (W)</th>
                 <th className="py-1.5 font-medium text-right">占比</th>
@@ -128,18 +128,18 @@ export default function Report() {
             </thead>
             <tbody>
               {r.losses.map((l) => (
-                <tr key={l.name} className="border-b border-slate-800/60 print:border-slate-200">
-                  <td className="py-1.5 text-slate-300 print:text-black">{l.name}</td>
-                  <td className="py-1.5 text-right tabular text-slate-200 print:text-black">{l.value.toFixed(3)}</td>
-                  <td className="py-1.5 text-right tabular text-slate-400">
+                <tr key={l.name} className="border-b border-neutral-800/60 print:border-neutral-200">
+                  <td className="py-1.5 text-neutral-300 print:text-black">{l.name}</td>
+                  <td className="py-1.5 text-right tabular text-neutral-200 print:text-black">{l.value.toFixed(3)}</td>
+                  <td className="py-1.5 text-right tabular text-neutral-400">
                     {r.totalLoss > 0 ? ((l.value / r.totalLoss) * 100).toFixed(1) : '0.0'}%
                   </td>
                 </tr>
               ))}
               <tr className="font-medium">
-                <td className="py-2 text-slate-200 print:text-black">合计</td>
-                <td className="py-2 text-right tabular text-cyan-300 print:text-black">{r.totalLoss.toFixed(3)}</td>
-                <td className="py-2 text-right text-slate-400">100%</td>
+                <td className="py-2 text-neutral-200 print:text-black">合计</td>
+                <td className="py-2 text-right tabular text-teal-300 print:text-black">{r.totalLoss.toFixed(3)}</td>
+                <td className="py-2 text-right text-neutral-400">100%</td>
               </tr>
             </tbody>
           </table>
@@ -151,11 +151,11 @@ export default function Report() {
 
         <Section title="五、设计诊断">
           {r.warnings.length === 0 ? (
-            <p className="text-[12px] text-slate-400">未发现明显问题。</p>
+            <p className="text-[12px] text-neutral-400">未发现明显问题。</p>
           ) : (
             <ul className="space-y-1.5">
               {r.warnings.map((w, i) => (
-                <li key={i} className="text-[12px] text-slate-300 print:text-black">
+                <li key={i} className="text-[12px] text-neutral-300 print:text-black">
                   <span
                     className={
                       w.level === 'critical' ? 'text-rose-400' : w.level === 'warn' ? 'text-amber-400' : 'text-emerald-400'
@@ -170,7 +170,7 @@ export default function Report() {
           )}
         </Section>
 
-        <div className="mt-6 flex items-start gap-2 rounded-lg border border-amber-500/20 bg-amber-500/[0.06] p-3 print:border-slate-300 print:bg-white">
+        <div className="mt-6 flex items-start gap-2 rounded-lg border border-amber-500/20 bg-amber-500/[0.06] p-3 print:border-neutral-300 print:bg-white">
           <ShieldAlert size={15} className="mt-0.5 shrink-0 text-amber-400" />
           <p className="text-[11px] leading-relaxed text-amber-200/90 print:text-black">
             本报告由工程近似模型生成：气隙公式未计边缘效应，漏感为二维矩形绕组解析近似，
@@ -180,13 +180,13 @@ export default function Report() {
         </div>
       </article>
 
-      <p className="mt-4 text-center text-[11px] text-slate-500 print:hidden">
+      <p className="mt-4 text-center text-[11px] text-neutral-500 print:hidden">
         LLC 谐振腔参数与电路理论见{' '}
         <a
           href="https://www.llc.power-knowledge.tech"
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-0.5 text-cyan-400 hover:text-cyan-300"
+          className="inline-flex items-center gap-0.5 text-teal-400 hover:text-teal-300"
         >
           llc.power-knowledge.tech <ExternalLink size={10} />
         </a>
@@ -207,7 +207,7 @@ function fmtTemp(v: number) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-5">
-      <h3 className="text-[13px] font-semibold text-slate-200 print:text-black mb-2">{title}</h3>
+      <h3 className="text-[13px] font-semibold text-neutral-200 print:text-black mb-2">{title}</h3>
       {children}
     </section>
   )
@@ -218,9 +218,9 @@ function Table({ rows }: { rows: [string, string][] }) {
     <table className="w-full text-[12px]">
       <tbody>
         {rows.map(([k, v]) => (
-          <tr key={k} className="border-b border-slate-800/60 print:border-slate-200">
-            <td className="py-1.5 pr-4 text-slate-500 print:text-slate-700 align-top w-[46%]">{k}</td>
-            <td className="py-1.5 tabular text-slate-200 print:text-black">{v}</td>
+          <tr key={k} className="border-b border-neutral-800/60 print:border-neutral-200">
+            <td className="py-1.5 pr-4 text-neutral-500 print:text-neutral-700 align-top w-[46%]">{k}</td>
+            <td className="py-1.5 tabular text-neutral-200 print:text-black">{v}</td>
           </tr>
         ))}
       </tbody>
@@ -230,9 +230,9 @@ function Table({ rows }: { rows: [string, string][] }) {
 
 function Metric({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950/50 px-3 py-2 print:border-slate-300 print:bg-white">
-      <div className="text-[11px] text-slate-500 print:text-slate-700">{label}</div>
-      <div className="tabular text-[15px] font-semibold text-slate-100 print:text-black">{value}</div>
+    <div className="rounded-lg border border-neutral-800 bg-neutral-950/50 px-3 py-2 print:border-neutral-300 print:bg-white">
+      <div className="text-[11px] text-neutral-500 print:text-neutral-700">{label}</div>
+      <div className="tabular text-[15px] font-semibold text-neutral-100 print:text-black">{value}</div>
     </div>
   )
 }

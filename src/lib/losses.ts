@@ -104,7 +104,7 @@ const COLORS = {
   core: '#ef4444',
   cuP: '#f59e0b',
   cuS: '#84cc16',
-  cond: '#06b6d4',
+  cond: '#0d9488',
   sw: '#8b5cf6',
   rect: '#ec4899',
   aux: '#14b8a6',

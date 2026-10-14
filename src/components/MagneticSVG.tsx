@@ -18,12 +18,12 @@ interface Props {
 export function MagneticSVG({ magnetic, scheme }: Props) {
   const showAux = scheme === 'core-combination' || scheme === undefined
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-900/40 p-3">
+    <div className="rounded-lg border border-neutral-800 bg-neutral-900/40 p-3">
       <svg viewBox="0 0 460 300" className="w-full h-auto">
         <defs>
           <linearGradient id="coreGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#334155" />
-            <stop offset="100%" stopColor="#1e293b" />
+            <stop offset="0%" stopColor="#404040" />
+            <stop offset="100%" stopColor="#262626" />
           </linearGradient>
           <linearGradient id="cuGrad" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#f59e0b" />
@@ -33,17 +33,17 @@ export function MagneticSVG({ magnetic, scheme }: Props) {
 
         {/* ── 主磁芯（EE 型，中柱 + 两侧柱） ── */}
         <g>
-          <rect x="70" y="40" width="26" height="160" rx="3" fill="url(#coreGrad)" stroke="#475569" />
-          <rect x="214" y="40" width="26" height="160" rx="3" fill="url(#coreGrad)" stroke="#475569" />
-          <rect x="70" y="40" width="170" height="24" rx="3" fill="url(#coreGrad)" stroke="#475569" />
-          <rect x="70" y="176" width="170" height="24" rx="3" fill="url(#coreGrad)" stroke="#475569" />
+          <rect x="70" y="40" width="26" height="160" rx="3" fill="url(#coreGrad)" stroke="#525252" />
+          <rect x="214" y="40" width="26" height="160" rx="3" fill="url(#coreGrad)" stroke="#525252" />
+          <rect x="70" y="40" width="170" height="24" rx="3" fill="url(#coreGrad)" stroke="#525252" />
+          <rect x="70" y="176" width="170" height="24" rx="3" fill="url(#coreGrad)" stroke="#525252" />
           {/* 主磁芯气隙（小） */}
-          <rect x="96" y="40" width="118" height="4" fill="#0b1220" />
-          <rect x="96" y="196" width="118" height="4" fill="#0b1220" />
-          <text x="155" y="30" textAnchor="middle" fill="#94a3b8" fontSize="11">
+          <rect x="96" y="40" width="118" height="4" fill="#0a0a0a" />
+          <rect x="96" y="196" width="118" height="4" fill="#0a0a0a" />
+          <text x="155" y="30" textAnchor="middle" fill="#a3a3a3" fontSize="11">
             主磁芯 A（EE 型）
           </text>
-          <text x="155" y="222" textAnchor="middle" fill="#64748b" fontSize="10">
+          <text x="155" y="222" textAnchor="middle" fill="#737373" fontSize="10">
             主气隙 lg,A ↑Lm
           </text>
         </g>
@@ -76,23 +76,23 @@ export function MagneticSVG({ magnetic, scheme }: Props) {
         {/* ── 副磁芯 B（可调气隙） ── */}
         {showAux && (
           <g>
-            <rect x="330" y="60" width="70" height="22" rx="3" fill="url(#coreGrad)" stroke="#475569" />
-            <rect x="330" y="140" width="70" height="22" rx="3" fill="url(#coreGrad)" stroke="#475569" />
-            <rect x="330" y="82" width="70" height="58" rx="3" fill="url(#coreGrad)" stroke="#475569" />
+            <rect x="330" y="60" width="70" height="22" rx="3" fill="url(#coreGrad)" stroke="#525252" />
+            <rect x="330" y="140" width="70" height="22" rx="3" fill="url(#coreGrad)" stroke="#525252" />
+            <rect x="330" y="82" width="70" height="58" rx="3" fill="url(#coreGrad)" stroke="#525252" />
             {/* 副磁芯气隙（可调，大） */}
-            <rect x="330" y="82" width="70" height="10" fill="#0b1220" stroke="#f43f5e" strokeDasharray="2 2" />
-            <text x="365" y="50" textAnchor="middle" fill="#94a3b8" fontSize="11">
+            <rect x="330" y="82" width="70" height="10" fill="#0a0a0a" stroke="#f43f5e" strokeDasharray="2 2" />
+            <text x="365" y="50" textAnchor="middle" fill="#a3a3a3" fontSize="11">
               副磁芯 B
             </text>
             <text x="365" y="180" textAnchor="middle" fill="#f43f5e" fontSize="10">
               副气隙 lg,B → Lr
             </text>
-            <path d="M 300 120 L 328 120" stroke="#475569" strokeWidth="2" markerEnd="url(#arrow)" />
+            <path d="M 300 120 L 328 120" stroke="#525252" strokeWidth="2" markerEnd="url(#arrow)" />
           </g>
         )}
 
         {/* ── 标注 ── */}
-        <g fontSize="10" fill="#64748b">
+        <g fontSize="10" fill="#737373">
           <text x="20" y="262">磁路分工：</text>
           <text x="20" y="278">
             主磁芯承担励磁（Lm ↔ 主气隙），副磁芯承担谐振电感（Lr ↔ 副气隙），
@@ -119,9 +119,9 @@ function fmt(v: number, d = 2) {
 
 function Stat({ label, value, ok }: { label: string; value: string; ok?: boolean }) {
   return (
-    <div className="rounded border border-slate-800 bg-slate-950/60 px-2 py-1.5">
-      <div className="text-slate-500">{label}</div>
-      <div className={`tabular font-medium ${ok === false ? 'text-rose-400' : 'text-slate-200'}`}>
+    <div className="rounded border border-neutral-800 bg-neutral-950/60 px-2 py-1.5">
+      <div className="text-neutral-500">{label}</div>
+      <div className={`tabular font-medium ${ok === false ? 'text-rose-400' : 'text-neutral-200'}`}>
         {value}
       </div>
     </div>

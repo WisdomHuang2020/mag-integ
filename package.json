@@ -1,12 +1,13 @@
 {
   "name": "magnetic-llc-design-tool",
   "private": true,
-  "version": "0.1.0",
-  "description": "磁集成 LLC 变压器设计工具 —— 谐振腔参数设计 + 磁集成磁件结构设计与损耗分析",
+  "version": "1.0.0",
+  "description": "磁集成 LLC 变压器设计工具 —— 磁路分配、气隙与漏感设计、匝数与损耗核算",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/stamp-favicon.mjs",
+    "lint": "tsc -b --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "recharts": "^2.15.0"
   },
   "devDependencies": {
+    "@types/node": "^26.6.5",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",

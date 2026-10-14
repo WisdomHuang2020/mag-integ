@@ -2,11 +2,26 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      favicon: 指向 public/favicon.svg。
+      路径用相对写法 ./favicon.svg 而非 /favicon.svg —— vite base 为 './'，
+      同一份 dist 需同时服务自有域名根路径与 GitHub Pages 子路径(/mag-integ/)，
+      绝对路径会让 Pages 侧 404。
+      构建后由 scripts/stamp-favicon.mjs 追加内容哈希戳（?v=<sha256前8位>），
+      否则浏览器会长期复用旧图标（favicon 是缓存最顽固的资源）。
+    -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>磁集成 LLC 变压器设计工具</title>
     <meta
       name="description"
-      content="面向磁集成 LLC 谐振变换器的变压器设计工具：谐振腔参数设计、磁集成磁件结构、气隙与漏感分配、损耗与温升分析。"
+      content="面向磁集成 LLC 谐振变换器的变压器磁件设计工具：磁路分配、气隙与漏感设计、匝数与损耗核算。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
     />
   </head>
   <body>

@@ -56,15 +56,15 @@ export default function Designer() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-6">
-      <div className="mb-5 rounded-xl border border-cyan-500/25 bg-cyan-500/[0.05] px-4 py-3">
-        <p className="text-[12px] leading-relaxed text-cyan-100/90">
-          <strong className="text-cyan-200">本页只做磁集成变压器的磁件设计。</strong>
+      <div className="mb-5 rounded-xl border border-teal-500/25 bg-teal-500/[0.05] px-4 py-3">
+        <p className="text-[12px] leading-relaxed text-teal-100/90">
+          <strong className="text-teal-200">本页只做磁集成变压器的磁件设计。</strong>
           LLC 拓扑原理、FHA 增益、ZVS 条件、谐振腔参数选取等，请用参考站
           <a
             href="https://www.llc.power-knowledge.tech/designer"
             target="_blank"
             rel="noreferrer"
-            className="mx-1 underline decoration-cyan-400/50 hover:text-cyan-300"
+            className="mx-1 underline decoration-teal-400/50 hover:text-teal-300"
           >
             llc.power-knowledge.tech
           </a>
@@ -76,10 +76,10 @@ export default function Designer() {
         {/* ══════════ 输入区 ══════════ */}
         <aside className="lg:col-span-4 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-slate-200">输入</h2>
+            <h2 className="text-sm font-semibold text-neutral-200">输入</h2>
             <button
               onClick={() => setInputs(DEFAULT_INPUTS)}
-              className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-cyan-300"
+              className="flex items-center gap-1 text-[11px] text-neutral-400 hover:text-teal-300"
             >
               <RotateCcw size={12} /> 恢复默认算例
             </button>
@@ -125,8 +125,8 @@ export default function Designer() {
               ]}
             />
 
-            <details className="rounded-lg border border-slate-700/70 bg-slate-950/40 px-2.5 py-2">
-              <summary className="cursor-pointer text-[11px] text-cyan-400/90 hover:text-cyan-300">
+            <details className="rounded-lg border border-neutral-700/70 bg-neutral-950/40 px-2.5 py-2">
+              <summary className="cursor-pointer text-[11px] text-teal-400/90 hover:text-teal-300">
                 已在 LLC 工具完成设计？直接填入 Lr / Lm / n（可选）
               </summary>
               <div className="mt-2 space-y-2">
@@ -135,15 +135,15 @@ export default function Designer() {
                   <Field label="Lm（覆盖）" unit="µH" value={inputs.lmOverride} onChange={(v) => update('lmOverride', v)} />
                 </Row>
                 <Field label="匝比 n（覆盖）" value={inputs.nOverride} onChange={(v) => update('nOverride', v)} step={0.1} />
-                <p className="text-[10px] leading-relaxed text-slate-500">
-                  本工具的 Q 只按「感容分界点增益」判据取值，<strong className="text-slate-400">不含 ZVS 死区约束</strong>
+                <p className="text-[10px] leading-relaxed text-neutral-500">
+                  本工具的 Q 只按「感容分界点增益」判据取值，<strong className="text-neutral-400">不含 ZVS 死区约束</strong>
                   （那属于 LLC 电路设计）。若参考站的完整设计已给出确切 Lr / Lm（含死区约束），填在这里更准。
                   填 0 表示由本工具反推。
                 </p>
               </div>
             </details>
 
-            <p className="text-[11px] leading-relaxed text-slate-500">
+            <p className="text-[11px] leading-relaxed text-neutral-500">
               这些用于反推 Lr / Lm / n 与绕组电流。本页不展开其理论——FHA 增益、ZVS 条件与 Q 上限判据见参考站。
             </p>
           </Group>
@@ -161,7 +161,7 @@ export default function Designer() {
               onChange={(v) => update('auxAeRatio', v)}
               step={0.05}
             />
-            <p className="text-[11px] leading-relaxed text-slate-500">
+            <p className="text-[11px] leading-relaxed text-neutral-500">
               副磁芯（承担 Lr 的那部分）与主磁芯的截面积之比。比值越小，副磁芯所需气隙越大、磁场越易泄漏。
             </p>
           </Group>
@@ -176,8 +176,8 @@ export default function Designer() {
               <Field label="原边厚度 d1" unit="mm" value={inputs.geomPrimaryThickness} onChange={(v) => update('geomPrimaryThickness', v)} step={0.05} />
             </Row>
             <Field label="副边厚度 d2" unit="mm" value={inputs.geomSecondaryThickness} onChange={(v) => update('geomSecondaryThickness', v)} step={0.05} />
-            <p className="text-[11px] leading-relaxed text-slate-500">
-              <strong className="text-slate-400">这是磁集成设计的核心调节手段</strong>：漏感
+            <p className="text-[11px] leading-relaxed text-neutral-500">
+              <strong className="text-neutral-400">这是磁集成设计的核心调节手段</strong>：漏感
               Lk ∝ (d1/3 + d12 + d2/3)，拉大原副边间距即可增大漏感，从而减少副磁芯需要补足的电感。
             </p>
           </Group>
@@ -273,14 +273,14 @@ export default function Designer() {
                   color="#14b8a6"
                   note="由副磁芯气隙 lg,B 调节"
                 />
-                <div className="rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2">
+                <div className="rounded-lg border border-neutral-700 bg-neutral-950/60 px-3 py-2">
                   <div className="flex items-baseline justify-between">
-                    <span className="text-[11px] text-slate-400">谐振电感需求 Lr</span>
-                    <span className="tabular text-[15px] font-semibold text-cyan-300">{fmt(t.lr)} µH</span>
+                    <span className="text-[11px] text-neutral-400">谐振电感需求 Lr</span>
+                    <span className="tabular text-[15px] font-semibold text-teal-300">{fmt(t.lr)} µH</span>
                   </div>
                   <div className="mt-1 flex items-baseline justify-between">
-                    <span className="text-[11px] text-slate-400">励磁电感 Lm（由主磁芯气隙锁定）</span>
-                    <span className="tabular text-[15px] font-semibold text-slate-200">{fmt(t.lm)} µH</span>
+                    <span className="text-[11px] text-neutral-400">励磁电感 Lm（由主磁芯气隙锁定）</span>
+                    <span className="tabular text-[15px] font-semibold text-neutral-200">{fmt(t.lm)} µH</span>
                   </div>
                 </div>
                 <MB tex="L_r=L_k(\text{绕组几何})+L_{aux}(l_{g,B})\qquad L_m\leftrightarrow l_{g,A}" />
@@ -329,42 +329,42 @@ export default function Designer() {
             <div className="overflow-x-auto">
               <table className="w-full text-[12px]">
                 <thead>
-                  <tr className="text-left text-slate-500 border-b border-slate-800">
+                  <tr className="text-left text-neutral-500 border-b border-neutral-800">
                     <th className="py-2 font-medium">对比项</th>
                     <th className="py-2 font-medium">分立方案（独立 Lr 电感 + 变压器）</th>
                     <th className="py-2 font-medium">本方案（磁芯组合集成）</th>
                   </tr>
                 </thead>
-                <tbody className="text-slate-300">
-                  <tr className="border-b border-slate-800/60">
-                    <td className="py-2 text-slate-400">磁芯数量</td>
+                <tbody className="text-neutral-300">
+                  <tr className="border-b border-neutral-800/60">
+                    <td className="py-2 text-neutral-400">磁芯数量</td>
                     <td className="py-2">2 个（Lr 电感磁芯 + 变压器磁芯）</td>
-                    <td className="py-2 text-cyan-300">2 个（主磁芯 A + 副磁芯 B，共磁路）</td>
+                    <td className="py-2 text-teal-300">2 个（主磁芯 A + 副磁芯 B，共磁路）</td>
                   </tr>
-                  <tr className="border-b border-slate-800/60">
-                    <td className="py-2 text-slate-400">原边绕组</td>
+                  <tr className="border-b border-neutral-800/60">
+                    <td className="py-2 text-neutral-400">原边绕组</td>
                     <td className="py-2">2 套（电感绕组 + 变压器原边）</td>
-                    <td className="py-2 text-cyan-300">1 套（原边绕在两对磁芯上）</td>
+                    <td className="py-2 text-teal-300">1 套（原边绕在两对磁芯上）</td>
                   </tr>
-                  <tr className="border-b border-slate-800/60">
-                    <td className="py-2 text-slate-400">Lr 实现方式</td>
+                  <tr className="border-b border-neutral-800/60">
+                    <td className="py-2 text-neutral-400">Lr 实现方式</td>
                     <td className="py-2">独立电感，Lr 可独立标定</td>
                     <td className="py-2">漏感 + 副磁芯电感，由气隙与绕组间距共同决定</td>
                   </tr>
-                  <tr className="border-b border-slate-800/60">
-                    <td className="py-2 text-slate-400">磁芯磁密</td>
+                  <tr className="border-b border-neutral-800/60">
+                    <td className="py-2 text-neutral-400">磁芯磁密</td>
                     <td className="py-2">各自独立，磁通互不影响</td>
-                    <td className="py-2 text-cyan-300">公共磁柱上两路交变磁通方向相反 ⇒ 交变磁密降低</td>
+                    <td className="py-2 text-teal-300">公共磁柱上两路交变磁通方向相反 ⇒ 交变磁密降低</td>
                   </tr>
                   <tr>
-                    <td className="py-2 text-slate-400">代价</td>
+                    <td className="py-2 text-neutral-400">代价</td>
                     <td className="py-2">元件多、高度大、占用 PCB 面积</td>
                     <td className="py-2">Lr 精度依赖绕组工艺一致性，需有限元复核</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-relaxed text-slate-500">
+            <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-relaxed text-neutral-500">
               <GitCompare size={12} className="mt-0.5 shrink-0" />
               <span>
                 「公共磁柱磁通相消 ⇒ 交变磁密降低 ⇒ 铁损下降」这一条来自王鑫(2020) 2.4.1 节对磁集成方式的两类归纳，
@@ -383,36 +383,36 @@ export default function Designer() {
                   return (
                     <div key={l.name}>
                       <div className="flex justify-between text-[11px] mb-0.5">
-                        <span className="text-slate-300">{l.name}</span>
-                        <span className="tabular text-slate-400">
+                        <span className="text-neutral-300">{l.name}</span>
+                        <span className="tabular text-neutral-400">
                           {l.value.toFixed(2)} W · {pct.toFixed(1)}%
                         </span>
                       </div>
-                      <div className="h-1.5 rounded-full bg-slate-800 overflow-hidden">
+                      <div className="h-1.5 rounded-full bg-neutral-800 overflow-hidden">
                         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: l.color }} />
                       </div>
                     </div>
                   )
                 })}
-                <div className="pt-2 mt-2 border-t border-slate-800 flex justify-between text-[12px]">
-                  <span className="text-slate-300">合计</span>
-                  <span className="tabular font-medium text-cyan-300">{r.totalLoss.toFixed(2)} W</span>
+                <div className="pt-2 mt-2 border-t border-neutral-800 flex justify-between text-[12px]">
+                  <span className="text-neutral-300">合计</span>
+                  <span className="tabular font-medium text-teal-300">{r.totalLoss.toFixed(2)} W</span>
                 </div>
                 <div className="flex justify-between text-[12px]">
-                  <span className="text-slate-300">效率</span>
+                  <span className="text-neutral-300">效率</span>
                   <span className="tabular font-medium text-emerald-400">{(r.efficiency * 100).toFixed(2)} %</span>
                 </div>
                 <div className="flex justify-between text-[12px]">
-                  <span className="text-slate-300">温升估算</span>
-                  <span className={`tabular font-medium ${r.tempRiseC > 150 ? 'text-rose-400' : 'text-slate-200'}`}>
+                  <span className="text-neutral-300">温升估算</span>
+                  <span className={`tabular font-medium ${r.tempRiseC > 150 ? 'text-rose-400' : 'text-neutral-200'}`}>
                     {fmtTemp(r.tempRiseC)}
                   </span>
                 </div>
               </div>
             </div>
-            <p className="mt-2 text-[11px] leading-relaxed text-slate-500">
+            <p className="mt-2 text-[11px] leading-relaxed text-neutral-500">
               磁芯损耗用「手册比损耗 × 体积 × 波形系数」；绕组用 Dowell 箔式单层交流因子（多层并联请另行校核）；
-              <strong className="text-slate-400">副磁芯铁损已单独列出</strong>——这是磁集成方案特有的损耗项，
+              <strong className="text-neutral-400">副磁芯铁损已单独列出</strong>——这是磁集成方案特有的损耗项，
               分立方案中它对应独立电感的铁损。
             </p>
           </Card>
@@ -420,7 +420,7 @@ export default function Designer() {
           {/* ⑤ 诊断 */}
           <Card title="⑤ 磁件设计诊断">
             {r.warnings.length === 0 ? (
-              <p className="text-[12px] text-slate-400">未发现明显问题。</p>
+              <p className="text-[12px] text-neutral-400">未发现明显问题。</p>
             ) : (
               <ul className="space-y-1.5">
                 {r.warnings.map((w, i) => (
@@ -430,7 +430,7 @@ export default function Designer() {
                     {w.level === 'good' && <CheckCircle2 size={14} className="mt-0.5 shrink-0 text-emerald-400" />}
                     <span
                       className={
-                        w.level === 'critical' ? 'text-rose-300' : w.level === 'warn' ? 'text-amber-200' : 'text-slate-300'
+                        w.level === 'critical' ? 'text-rose-300' : w.level === 'warn' ? 'text-amber-200' : 'text-neutral-300'
                       }
                     >
                       {w.text}
@@ -439,9 +439,9 @@ export default function Designer() {
                 ))}
               </ul>
             )}
-            <div className="mt-3 flex items-start gap-2 rounded-lg border border-slate-800 bg-slate-900/40 p-3">
-              <Info size={14} className="mt-0.5 shrink-0 text-slate-500" />
-              <p className="text-[11px] text-slate-500 leading-relaxed">
+            <div className="mt-3 flex items-start gap-2 rounded-lg border border-neutral-800 bg-neutral-900/40 p-3">
+              <Info size={14} className="mt-0.5 shrink-0 text-neutral-500" />
+              <p className="text-[11px] text-neutral-500 leading-relaxed">
                 本页只算磁件。气隙公式为理想磁路式（未计边缘效应），漏感为二维矩形绕组解析近似，
                 温升用等效外表面积单热阻估算（h ≈ 15 W/m²·K）。定型前请用有限元复核漏感与磁密分布。
               </p>
@@ -482,23 +482,23 @@ function AllocBar({
   return (
     <div>
       <div className="flex justify-between text-[11px] mb-1">
-        <span className="text-slate-300">{label}</span>
-        <span className="tabular text-slate-400">
+        <span className="text-neutral-300">{label}</span>
+        <span className="tabular text-neutral-400">
           {fmt(value)} µH · {pct.toFixed(0)}%
         </span>
       </div>
-      <div className="h-2 rounded-full bg-slate-800 overflow-hidden">
+      <div className="h-2 rounded-full bg-neutral-800 overflow-hidden">
         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
       </div>
-      <div className="mt-0.5 text-[10px] text-slate-500">{note}</div>
+      <div className="mt-0.5 text-[10px] text-neutral-500">{note}</div>
     </div>
   )
 }
 
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-      <div className="text-[11px] font-semibold text-cyan-400/90 mb-2 tracking-wide">{title}</div>
+    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-3">
+      <div className="text-[11px] font-semibold text-teal-400/90 mb-2 tracking-wide">{title}</div>
       <div className="space-y-2">{children}</div>
     </div>
   )
@@ -523,9 +523,9 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] text-slate-400">
+      <span className="text-[11px] text-neutral-400">
         {label}
-        {unit && <span className="text-slate-600"> ({unit})</span>}
+        {unit && <span className="text-neutral-600"> ({unit})</span>}
       </span>
       <input
         type="number"
@@ -553,7 +553,7 @@ function Select({
 }) {
   return (
     <label className="block">
-      <span className="text-[11px] text-slate-400">{label}</span>
+      <span className="text-[11px] text-neutral-400">{label}</span>
       <select value={value} onChange={(e) => onChange(e.target.value)}>
         {options.map(([v, l]) => (
           <option key={v} value={v}>
@@ -567,10 +567,10 @@ function Select({
 
 function KPI({ label, value, tone }: { label: string; value: string; tone?: 'good' | 'warn' | 'bad' }) {
   const color =
-    tone === 'good' ? 'text-emerald-400' : tone === 'warn' ? 'text-amber-400' : tone === 'bad' ? 'text-rose-400' : 'text-slate-100'
+    tone === 'good' ? 'text-emerald-400' : tone === 'warn' ? 'text-amber-400' : tone === 'bad' ? 'text-rose-400' : 'text-neutral-100'
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/40 px-3 py-2.5">
-      <div className="text-[11px] text-slate-500">{label}</div>
+    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 px-3 py-2.5">
+      <div className="text-[11px] text-neutral-500">{label}</div>
       <div className={`tabular text-lg font-semibold ${color}`}>{value}</div>
     </div>
   )
@@ -578,10 +578,10 @@ function KPI({ label, value, tone }: { label: string; value: string; tone?: 'goo
 
 function Item({ label, value, tone }: { label: string; value: string; tone?: 'good' | 'warn' | 'bad' }) {
   const color =
-    tone === 'good' ? 'text-emerald-400' : tone === 'warn' ? 'text-amber-400' : tone === 'bad' ? 'text-rose-400' : 'text-slate-200'
+    tone === 'good' ? 'text-emerald-400' : tone === 'warn' ? 'text-amber-400' : tone === 'bad' ? 'text-rose-400' : 'text-neutral-200'
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950/50 px-2.5 py-1.5">
-      <div className="text-[10px] text-slate-500 truncate" title={label}>
+    <div className="rounded-lg border border-neutral-800 bg-neutral-950/50 px-2.5 py-1.5">
+      <div className="text-[10px] text-neutral-500 truncate" title={label}>
         {label}
       </div>
       <div className={`tabular text-[13px] font-medium ${color}`}>{value}</div>
@@ -591,9 +591,9 @@ function Item({ label, value, tone }: { label: string; value: string; tone?: 'go
 
 function Card({ title, desc, children }: { title: string; desc?: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4">
-      <h3 className="text-[13px] font-semibold text-slate-200">{title}</h3>
-      {desc && <p className="mt-1 mb-3 text-[11px] text-slate-500">{desc}</p>}
+    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
+      <h3 className="text-[13px] font-semibold text-neutral-200">{title}</h3>
+      {desc && <p className="mt-1 mb-3 text-[11px] text-neutral-500">{desc}</p>}
       {!desc && <div className="mb-3" />}
       {children}
     </div>

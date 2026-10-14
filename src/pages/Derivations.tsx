@@ -116,28 +116,28 @@ export default function Derivations() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
       <header className="mb-7">
-        <h1 className="text-xl font-semibold text-slate-100">磁路与磁件公式</h1>
-        <p className="mt-2 text-[12px] leading-relaxed text-slate-400">
+        <h1 className="text-xl font-semibold text-neutral-100">磁路与磁件公式</h1>
+        <p className="mt-2 text-[12px] leading-relaxed text-neutral-400">
           本页只列「从 Lr / Lm 到实际磁件」这一步用到的公式。
-          <strong className="text-slate-300">FHA 增益方程的推导、输入阻抗与感容分界</strong>
+          <strong className="text-neutral-300">FHA 增益方程的推导、输入阻抗与感容分界</strong>
           属于 LLC 电路理论，已在参考站
           <a
             href="https://www.llc.power-knowledge.tech/derivations"
             target="_blank"
             rel="noreferrer"
-            className="mx-1 underline decoration-cyan-400/50 hover:text-cyan-300"
+            className="mx-1 underline decoration-teal-400/50 hover:text-teal-300"
           >
             llc.power-knowledge.tech/derivations
           </a>
           完整给出，此处不再重复。
         </p>
-        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 text-[11px] text-slate-500">
+        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 text-[11px] text-neutral-500">
           <span>
             <span className="mr-1 rounded bg-emerald-500/10 px-1.5 text-emerald-400">文献</span>
             取自本地文献库论文
           </span>
           <span>
-            <span className="mr-1 rounded bg-cyan-500/10 px-1.5 text-cyan-400">公开公式</span>
+            <span className="mr-1 rounded bg-teal-500/10 px-1.5 text-teal-400">公开公式</span>
             教材 / 厂商资料的标准形式
           </span>
           <span>
@@ -150,23 +150,23 @@ export default function Derivations() {
       <Section title="一、磁路与磁件几何" rows={MAGNETIC} />
       <Section title="二、损耗与温升" rows={LOSS} />
 
-      <section className="mt-8 rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-        <h2 className="text-[13px] font-semibold text-slate-200">三、本工具未建模的部分（明确声明）</h2>
-        <ul className="mt-2 space-y-1.5 text-[12px] leading-relaxed text-slate-400">
-          <li>· <span className="text-slate-300">边缘效应</span>：气隙公式按理想磁路计算，未含 fringing 修正——实际电感会高于计算值。</li>
-          <li>· <span className="text-slate-300">分布电容</span>：未建模。高频下原副边分布电容影响共模噪声与谐振，需另行评估。</li>
-          <li>· <span className="text-slate-300">绕组排布</span>：漏感公式假设矩形绕组截面，未区分交错/分层排布带来的差异。</li>
-          <li>· <span className="text-slate-300">多相均流</span>：两相交错并联下的均流机理与磁集成均流结构未纳入本版。</li>
-          <li>· <span className="text-slate-300">热点与热阻分层</span>：温升为单一热阻估算，无热网络与热点温度。</li>
+      <section className="mt-8 rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <h2 className="text-[13px] font-semibold text-neutral-200">三、本工具未建模的部分（明确声明）</h2>
+        <ul className="mt-2 space-y-1.5 text-[12px] leading-relaxed text-neutral-400">
+          <li>· <span className="text-neutral-300">边缘效应</span>：气隙公式按理想磁路计算，未含 fringing 修正——实际电感会高于计算值。</li>
+          <li>· <span className="text-neutral-300">分布电容</span>：未建模。高频下原副边分布电容影响共模噪声与谐振，需另行评估。</li>
+          <li>· <span className="text-neutral-300">绕组排布</span>：漏感公式假设矩形绕组截面，未区分交错/分层排布带来的差异。</li>
+          <li>· <span className="text-neutral-300">多相均流</span>：两相交错并联下的均流机理与磁集成均流结构未纳入本版。</li>
+          <li>· <span className="text-neutral-300">热点与热阻分层</span>：温升为单一热阻估算，无热网络与热点温度。</li>
         </ul>
       </section>
 
-      <section className="mt-5 rounded-xl border border-slate-800 bg-slate-900/40 p-5">
-        <h2 className="text-[13px] font-semibold text-slate-200">四、结论的文献来源</h2>
-        <p className="mt-2 text-[12px] leading-relaxed text-slate-400">
+      <section className="mt-5 rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <h2 className="text-[13px] font-semibold text-neutral-200">四、结论的文献来源</h2>
+        <p className="mt-2 text-[12px] leading-relaxed text-neutral-400">
           磁集成方案分类与气隙—漏感分配思路，取自本地 8 篇学位论文（已建为可检索的 RAG 知识库）：
         </p>
-        <ol className="mt-2 space-y-1 text-[12px] text-slate-400 list-decimal list-inside">
+        <ol className="mt-2 space-y-1 text-[12px] text-neutral-400 list-decimal list-inside">
           <li>《高频 LLC 变换器的平面磁集成变压器设计》王鑫，北京交通大学，2020 —— 本工具主依据</li>
           <li>《两相交错并联 LLC 谐振变换器的磁集成理论与方法研究》武艳秋</li>
           <li>《磁集成 LLC 谐振变换器的分析和设计》班鹏程</li>
@@ -184,21 +184,21 @@ export default function Derivations() {
 function Section({ title, rows }: { title: string; rows: FormulaRow[] }) {
   return (
     <section className="mt-7">
-      <h2 className="text-[13px] font-semibold text-slate-200 mb-3">{title}</h2>
+      <h2 className="text-[13px] font-semibold text-neutral-200 mb-3">{title}</h2>
       <div className="space-y-3">
         {rows.map((r) => (
-          <div key={r.name} className="rounded-xl border border-slate-800 bg-slate-900/40 p-4">
+          <div key={r.name} className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[12px] font-medium text-slate-200">{r.name}</span>
+              <span className="text-[12px] font-medium text-neutral-200">{r.name}</span>
               <KindTag kind={r.kind} />
             </div>
             <MB tex={r.tex} />
-            <div className="mt-1 text-[11px] text-slate-500">
-              <span className="text-slate-400">出处：</span>
+            <div className="mt-1 text-[11px] text-neutral-500">
+              <span className="text-neutral-400">出处：</span>
               {r.source}
             </div>
-            <div className="mt-1 text-[11px] text-slate-500">
-              <span className="text-slate-400">说明：</span>
+            <div className="mt-1 text-[11px] text-neutral-500">
+              <span className="text-neutral-400">说明：</span>
               {r.note}
             </div>
           </div>
@@ -213,7 +213,7 @@ function KindTag({ kind }: { kind: FormulaRow['kind'] }) {
     kind === '文献'
       ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
       : kind === '公开公式'
-        ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+        ? 'bg-teal-500/10 text-teal-400 border-teal-500/20'
         : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
   return <span className={`rounded border px-1.5 py-0.5 text-[10px] ${cls}`}>{kind}</span>
 }

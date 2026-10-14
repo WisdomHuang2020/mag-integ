@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import type { ReactNode } from 'react'
-import { Blocks, BookOpen, Calculator, ExternalLink, FileText, Home, LineChart, Zap } from 'lucide-react'
+import { Blocks, BookOpen, Calculator, ExternalLink, FileText, Home, LineChart } from 'lucide-react'
+import BrandMark from './BrandMark'
 
 const NAV = [
   { to: '/', label: '首页', icon: Home },
@@ -14,15 +15,13 @@ const NAV = [
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/85 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-neutral-700 bg-neutral-950/85 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 h-14 flex items-center gap-6">
           <div className="flex items-center gap-2 shrink-0">
-            <span className="grid place-items-center w-8 h-8 rounded-lg bg-cyan-500/15 text-cyan-400">
-              <Zap size={18} />
-            </span>
+            <BrandMark className="w-8 h-8" />
             <div className="leading-tight">
-              <div className="text-sm font-semibold text-slate-100">磁集成 LLC 变压器设计</div>
-              <div className="text-[10px] text-slate-500 tracking-wide">
+              <div className="text-sm font-semibold text-neutral-100">磁集成 LLC 变压器设计</div>
+              <div className="text-[10px] text-neutral-500 tracking-wide">
                 MAGNETIC-INTEGRATED TRANSFORMER DESIGN
               </div>
             </div>
@@ -36,8 +35,8 @@ export default function Layout({ children }: { children: ReactNode }) {
                 className={({ isActive }) =>
                   `flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[13px] whitespace-nowrap transition-colors ${
                     isActive
-                      ? 'bg-cyan-500/15 text-cyan-300'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                      ? 'bg-teal-500/15 text-teal-300'
+                      : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/60'
                   }`
                 }
               >
@@ -50,7 +49,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             href="https://www.llc.power-knowledge.tech"
             target="_blank"
             rel="noreferrer"
-            className="ml-auto hidden lg:flex items-center gap-1 text-[11px] text-slate-500 hover:text-cyan-300 shrink-0"
+            className="ml-auto hidden lg:flex items-center gap-1 text-[11px] text-neutral-500 hover:text-teal-300 shrink-0"
             title="LLC 电路设计与理论推导请用参考站"
           >
             LLC 电路设计 <ExternalLink size={11} />
@@ -60,10 +59,11 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="border-t border-slate-800 bg-slate-950/60">
-        <div className="mx-auto max-w-7xl px-4 py-5 text-[11px] text-slate-500 leading-relaxed">
-          <div className="mb-1">
-            磁集成 LLC 变压器设计工具 · 本地研究用 · 未部署至任何服务器 · 标 v0.2.0
+      <footer className="border-t border-neutral-700 bg-neutral-950/60">
+        <div className="mx-auto max-w-7xl px-4 py-5 text-[11px] text-neutral-500 leading-relaxed">
+          <div className="flex items-center gap-2 mb-1">
+            <BrandMark className="w-4 h-4" />
+            <span>磁集成 LLC 变压器设计工具 · v{__APP_VERSION__}</span>
           </div>
           <div>
             职责边界：LLC 拓扑原理、FHA 增益推导、ZVS 条件与谐振腔参数选取由参考站
@@ -71,7 +71,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               href="https://www.llc.power-knowledge.tech"
               target="_blank"
               rel="noreferrer"
-              className="mx-1 text-cyan-400/80 hover:text-cyan-300"
+              className="mx-1 text-teal-400/80 hover:text-teal-300"
             >
               llc.power-knowledge.tech
             </a>

@@ -24,7 +24,7 @@ export function MB({ children, tex }: { children?: string; tex?: string }) {
   }, [tex, children])
   return (
     <div
-      className="my-3 overflow-x-auto rounded-lg border border-slate-800 bg-slate-900/50 px-4 py-3"
+      className="my-3 overflow-x-auto rounded-lg border border-neutral-800 bg-neutral-900/50 px-4 py-3"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   )
