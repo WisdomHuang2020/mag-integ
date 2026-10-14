@@ -1,0 +1,178 @@
+name: Deploy to Tencent Lighthouse
+
+# 正式对外域名：https://mag-integ.power-knowledge.tech/  与  https://www.mag-integ.power-knowledge.tech/
+# 服务器 43.142.148.37（实例 lhins-6i7vay90 / wisdom2026 / ap-shanghai），web 根 /var/www/mag-integ
+#
+# 本文件与姊妹项目 llc-design-tool / interleaved-pfc / ahb-flyback 的 deploy-lighthouse.yml 同构，
+# 仅站点名、域名、web 根不同，便于站群统一维护。
+#
+# ⚠️ 证书：www.mag-integ.power-knowledge.tech 是**三级子域**，通配符 *.power-knowledge.tech
+#    只匹配恰好一层标签，故该名字必须显式写进证书 SAN —— 已并入 pk-wildcard（重签时追加）。
+#
+# 设计要点：
+#   1. **未配置时不报错**。LH_* secrets 缺失时只打印 notice 后跳过，不让 main 红灯（文件可先合入）。
+#   2. **只在配置齐备时才跑构建**，避免无意义 CI 开销。
+#   3. **传输用 tar over ssh**（不依赖 rsync），与手动兜底部署同一套命令，避免两套漂移。
+#   4. **不做删除**：产物资源名带内容哈希，旧文件不被引用，属惰性残留。
+#   5. **拒绝降级部署**：上传前比对 version 与线上版本哨兵 `$LH_ROOT/.deployed-version`。
+#   6. **属主归位**：`--no-same-owner` + chown 到 www-data。
+#
+# 所需 repository secrets（与站群同名，便于记忆）：
+#   LH_HOST     43.142.148.37
+#   LH_USER     root
+#   LH_ROOT     /var/www/mag-integ      （必须等于 nginx 的 root 指令）
+#   LH_SSH_KEY  部署私钥全文（~/.ssh/mag_integ_ci）
+#   LH_PORT     可选，缺省 22
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: "lighthouse-mag-integ"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 前置判定：密钥未配置时优雅跳过，而不是让流水线变红。
+      # ⚠️ 这个分支是「假绿」来源：job 显示成功，但后续步骤全 skipped。
+      # 判断是否真部署了，必须看步骤级结果，不能只看 run 的绿勾。
+      - name: Check configuration
+        id: cfg
+        env:
+          LH_HOST: ${{ secrets.LH_HOST }}
+          LH_USER: ${{ secrets.LH_USER }}
+          LH_ROOT: ${{ secrets.LH_ROOT }}
+          LH_SSH_KEY: ${{ secrets.LH_SSH_KEY }}
+        run: |
+          if [ -z "$LH_HOST" ] || [ -z "$LH_USER" ] || [ -z "$LH_ROOT" ] || [ -z "$LH_SSH_KEY" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=已跳过轻量云部署::未配置 LH_HOST/LH_USER/LH_ROOT/LH_SSH_KEY，本次不上传任何文件。"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+            echo "配置齐备，将部署到 $LH_USER@$LH_HOST:$LH_ROOT"
+          fi
+
+      - name: Setup Node
+        if: steps.cfg.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: steps.cfg.outputs.ready == 'true'
+        run: npm ci
+
+      # 与 Pages 工作流保持同一套质量门禁（本站无 eslint 依赖，用 tsc 做类型门禁）。
+      - name: Lint
+        if: steps.cfg.outputs.ready == 'true'
+        run: npm run lint
+
+      # build = `tsc -b && vite build && node scripts/stamp-favicon.mjs`
+      # 末步给 dist/index.html 的 favicon 引用加内容哈希戳，治浏览器启发式缓存。
+      - name: Build
+        if: steps.cfg.outputs.ready == 'true'
+        run: npm run build
+
+      - name: Deploy to server over SSH
+        if: steps.cfg.outputs.ready == 'true'
+        env:
+          LH_HOST: ${{ secrets.LH_HOST }}
+          LH_USER: ${{ secrets.LH_USER }}
+          LH_ROOT: ${{ secrets.LH_ROOT }}
+          LH_SSH_KEY: ${{ secrets.LH_SSH_KEY }}
+          LH_PORT: ${{ secrets.LH_PORT }}
+        run: |
+          set -euo pipefail
+          PORT="${LH_PORT:-22}"
+          WEB_OWNER=www-data
+
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$LH_SSH_KEY" > ~/.ssh/lh_key
+          chmod 600 ~/.ssh/lh_key
+          ssh-keyscan -p "$PORT" -H "$LH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          SSH_CMD="ssh -p $PORT -i $HOME/.ssh/lh_key -o BatchMode=yes -o ConnectTimeout=20 $LH_USER@$LH_HOST"
+
+          echo "::group::服务器环境"
+          $SSH_CMD "whoami; hostname; echo '--- web root ---'; ls -la '$LH_ROOT' | sed -n '1,20p'"
+          echo "::endgroup::"
+
+          # ---------- 降级护栏（上传前） ----------
+          ART_VER=$(node -p "require('./package.json').version")
+          LIVE_VER=$($SSH_CMD "cat '$LH_ROOT/.deployed-version' 2>/dev/null || true" \
+                     | tr -d '\r\n' | head -c 64)
+          echo "本次产物版本 : $ART_VER"
+          echo "线上已部署版本: ${LIVE_VER:-（无记录）}"
+
+          if [ -n "$LIVE_VER" ]; then
+            if [ "$LIVE_VER" = "$ART_VER" ]; then
+              echo "版本相同，按允许的重复部署处理。"
+            else
+              OLDEST=$(printf '%s\n%s\n' "$LIVE_VER" "$ART_VER" | sort -V | head -1)
+              if [ "$OLDEST" = "$ART_VER" ]; then
+                echo "::error title=拒绝降级部署::本次产物 $ART_VER 严格早于线上 $LIVE_VER，已中止以免覆盖线上较新版本。"
+                exit 1
+              fi
+              echo "产物较新（$ART_VER > $LIVE_VER），允许部署。"
+            fi
+          else
+            echo "::warning title=无线上版本记录::服务器 $LH_ROOT/.deployed-version 不存在（首次部署），跳过降级检查。"
+          fi
+
+          # 上传前先备份现有站点，留退路（失败不阻断部署）
+          $SSH_CMD "tar czf ~/webroot-backup-\$(date +%F-%H%M%S).tar.gz -C '$LH_ROOT' . 2>/dev/null || true"
+
+          # 流式上传：tar over ssh，不依赖 rsync。
+          tar czf - -C dist . | $SSH_CMD "tar xzf - --no-same-owner -C '$LH_ROOT'"
+          $SSH_CMD "chown -R $WEB_OWNER:$WEB_OWNER '$LH_ROOT'" || true
+
+          # 上传成功后写入版本哨兵，供下一次部署做降级比对
+          $SSH_CMD "printf '%s\n' '$ART_VER' > '$LH_ROOT/.deployed-version'"
+          echo "已写入版本哨兵：$LH_ROOT/.deployed-version = $ART_VER"
+
+      # ⚠️ 自检步：**只做体检，绝不当门禁**。
+      # 实证：境外 runner 到本服务器的 TLS 握手可能被中间设备中断（curl 秒级 exit 35），
+      # 而部署本身已成功 —— 当门禁会把成功判成失败。硬门禁只留在 Deployment 步。
+      - name: Verify live site (self-check, never blocks)
+        if: steps.cfg.outputs.ready == 'true'
+        continue-on-error: true
+        env:
+          LH_HOST: ${{ secrets.LH_HOST }}
+        run: |
+          set +e
+          set -uo pipefail
+          DOMAIN=mag-integ.power-knowledge.tech
+          URL="https://$DOMAIN/"
+          LIVE=/tmp/live.html
+
+          # curl 的退出码与 HTTP 状态码是两件事，必须分别打印。
+          ok=0
+          for i in 1 2 3; do
+            code=$(curl -sS -o "$LIVE" -w '%{http_code}' -m 20 "$URL"); rc=$?
+            echo "第 ${i} 次请求：http=$code curl_exit=$rc"
+            if [ "$rc" = 0 ] && [ "$code" = "200" ]; then ok=1; break; fi
+            sleep 5
+          done
+
+          if [ "$ok" != 1 ] && [ -n "${LH_HOST:-}" ]; then
+            code=$(curl -sS -o "$LIVE" -w '%{http_code}' -m 20 \
+                   --resolve "$DOMAIN:443:$LH_HOST" "$URL"); rc=$?
+            echo "改走 IP（SNI 不变）：http=$code curl_exit=$rc"
+          fi
+
+          if [ "$ok" = 1 ]; then
+            echo "首页引用的资源："
+            grep -oE 'assets/index-[A-Za-z0-9_-]+\.(js|css)' "$LIVE" | sort -u || true
+            echo "版本串核验：$(grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' "$LIVE" | head -1 || echo '(页脚版本在 JS 内，需渲染后查)')"
+          else
+            echo "::warning title=自检未通过（不影响本次部署）::域名多次访问均失败，请核对线上产物。"
+          fi
+          exit 0

@@ -1,0 +1,33 @@
+# 仓库 ↔ 域名 ↔ Lighthouse 实例 ↔ web 根 对照表（单一真源）
+#
+# 改站点先改这张表，再同步 CI secrets 与 nginx。
+# 本表同时回答四个问题：改哪个仓库 → 触发哪个工作流 → 传到哪台机的哪个目录 → 从哪个域名验证。
+
+sites:
+  - id: mag-integ
+    repo: git@github.com:WisdomHuang2020/mag-integ.git
+    branch: main
+    domain: mag-integ.power-knowledge.tech
+    domain_alias: www.mag-integ.power-knowledge.tech # ⚠️ 三级子域，通配符不覆盖，须显式进证书 SAN
+    pages: https://wisdomhuang2020.github.io/mag-integ/
+    lighthouse:
+      instance_id: lhins-6i7vay90
+      instance_name: wisdom2026
+      region: ap-shanghai
+      host: 43.142.148.37
+      user: root
+      web_root: /var/www/mag-integ # 必须等于 nginx 的 root 指令
+      key: ~/.ssh/mag_integ_ci
+      port: 22
+      owner: www-data
+    dist: dist
+    build: npm run build
+    deploy_workflow: .github/workflows/deploy-lighthouse.yml
+    pages_workflow: .github/workflows/deploy.yml
+    verify:
+      - https://mag-integ.power-knowledge.tech/
+      - https://www.mag-integ.power-knowledge.tech/
+    notes: |
+      证书：并入 pk-wildcard（san 追加 www.mag-integ.power-knowledge.tech）。
+      裸子域由通配符 *.power-knowledge.tech 覆盖；www.mag-integ 必须显式列入 SAN。
+      路由：HashRouter（URL 形如 /#/designer），nginx 无需 SPA fallback 重写。

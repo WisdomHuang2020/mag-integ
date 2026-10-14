@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && node scripts/stamp-favicon.mjs",
-    "lint": "tsc -b --noEmit",
+    "lint": "tsc --noEmit -p tsconfig.json",
     "preview": "vite preview"
   },
   "dependencies": {
