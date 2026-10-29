@@ -1,0 +1,16 @@
+# 换行符统一为 LF —— 保证本机（core.autocrlf=true）与 CI（ubuntu）产出同一份字节。
+#
+# 为什么必须做：`scripts/stamp-favicon.mjs` 用 favicon.svg 的 sha256 前 8 位做缓存戳。
+# 同一文件在 CRLF 与 LF 下哈希不同 ⇒ 本机算出 00c4b5e3、CI 算出 0b713e0d，
+# 线上核验时会误判成「favicon 被改过」或「部署没生效」。
+* text=auto eol=lf
+
+# 二进制资源不做转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary

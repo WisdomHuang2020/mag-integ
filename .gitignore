@@ -4,3 +4,7 @@ _shots
 *.local
 .DS_Store
 _*.mts
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+*.tsbuildinfo

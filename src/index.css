@@ -105,10 +105,61 @@ input[type='range'] {
   color: var(--color-text-primary);
 }
 
+/* ── 站群通用视觉工具类（与 llc / ahb / interleaved-pfc 一致）── */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* Hero 逐项渐入（用 CSS 动画替代 framer-motion，零额外依赖；减少动效偏好下自动关闭） */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.5s ease-out forwards;
+}
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.15s; }
+.fade-up-3 { animation-delay: 0.25s; }
+.fade-up-4 { animation-delay: 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1;
+    animation: none;
+  }
+}
+
 /* 打印（设计报告） */
 @media print {
   body {
     background: #fff;
     color: #000;
+  }
+  /* 屏幕上靠滚动才能看全的容器，打印时会被静默裁掉 —— 必须放开 */
+  .overflow-x-auto {
+    overflow: visible !important;
+    width: 100% !important;
+  }
+  .text-gradient {
+    background: none !important;
+    -webkit-text-fill-color: #000 !important;
+    color: #000 !important;
+  }
+  .fade-up {
+    opacity: 1 !important;
+    animation: none !important;
   }
 }
