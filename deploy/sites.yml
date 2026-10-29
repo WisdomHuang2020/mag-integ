@@ -7,8 +7,9 @@ sites:
   - id: mag-integ
     repo: git@github.com:WisdomHuang2020/mag-integ.git
     branch: main
-    domain: mag-integ.power-knowledge.tech
-    domain_alias: www.mag-integ.power-knowledge.tech # ⚠️ 三级子域，通配符不覆盖，须显式进证书 SAN
+    # 规范域名：www 版。裸域由 nginx 301 收敛至此（与 wx-seastar 同策略）。
+    domain: www.mag-integ.power-knowledge.tech
+    domain_alias: mag-integ.power-knowledge.tech # ⚠️ 三级子域，通配符不覆盖，须显式进证书 SAN
     pages: https://wisdomhuang2020.github.io/mag-integ/
     lighthouse:
       instance_id: lhins-6i7vay90
@@ -25,9 +26,12 @@ sites:
     deploy_workflow: .github/workflows/deploy-lighthouse.yml
     pages_workflow: .github/workflows/deploy.yml
     verify:
-      - https://mag-integ.power-knowledge.tech/
       - https://www.mag-integ.power-knowledge.tech/
+      - https://mag-integ.power-knowledge.tech/ # 应 301 到上方
     notes: |
-      证书：并入 pk-wildcard（san 追加 www.mag-integ.power-knowledge.tech）。
+      证书：并入 pk-wildcard（SAN 追加 www.mag-integ.power-knowledge.tech）。
       裸子域由通配符 *.power-knowledge.tech 覆盖；www.mag-integ 必须显式列入 SAN。
-      路由：HashRouter（URL 形如 /#/designer），nginx 无需 SPA fallback 重写。
+      路由：正式站 BrowserRouter（干净 URL /designer），Pages 通道 HashRouter。
+      www 归一化：裸域 443 块 return 301 https://www...$request_uri，保留路径；
+      80 块的 acme.conf 在 301 之前，证书续期不受影响。
+      SPA 回退：location / { try_files $uri $uri/ /index.html; } —— BrowserRouter 深链必需。

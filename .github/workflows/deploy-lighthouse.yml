@@ -149,7 +149,8 @@ jobs:
         run: |
           set +e
           set -uo pipefail
-          DOMAIN=mag-integ.power-knowledge.tech
+          # 规范域名是 www 版；裸域由 nginx 301 收敛过来，故这里直接测 www。
+          DOMAIN=www.mag-integ.power-knowledge.tech
           URL="https://$DOMAIN/"
           LIVE=/tmp/live.html
 
