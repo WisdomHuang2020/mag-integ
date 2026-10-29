@@ -86,6 +86,16 @@ export interface LossArgs {
 export interface LossOut {
   items: LossItem[]
   totalLoss: number
+  /**
+   * 磁体自身损耗（铁损 + 绕组铜损），**不含**开关管与整流的损耗。
+   *
+   * 为什么必须单独拆出来：温升是按「这个发热体 → 这个散热面」算的。
+   * MOSFET 的导通/关断损耗发热在芯片结上、整流的损耗发热在整流器件上，
+   * 把它们算进磁芯的温升里会凭空替半导体背掉 1~2 W，导致温升严重高估。
+   */
+  magneticLoss: number
+  /** 半导体损耗（开关管导通 + 关断 + 整流），供参考，不参与磁体温升 */
+  semiconductorLoss: number
   efficiency: number
   detail: {
     core: number
@@ -153,11 +163,17 @@ export function computeLosses(a: LossArgs, pout: number): LossOut {
   ].filter((x) => x.value > 0 && Number.isFinite(x.value))
 
   const totalLoss = items.reduce((s, x) => s + x.value, 0)
+  // 磁体自身发热 = 主磁芯铁损 + 原边铜损 + 副边铜损 + 副磁芯铁损
+  const magneticLoss = core + cuPrimary + cuSecondary + auxCore
+  // 半导体发热 = 开关管导通 + 关断 + 整流
+  const semiconductorLoss = conduction + switching + rectifier
   const efficiency = pout > 0 && pout + totalLoss > 0 ? pout / (pout + totalLoss) : 0
 
   return {
     items,
     totalLoss,
+    magneticLoss,
+    semiconductorLoss,
     efficiency,
     detail: {
       core,

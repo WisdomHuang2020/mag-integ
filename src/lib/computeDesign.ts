@@ -155,17 +155,22 @@ export function computeDesign(inputs: DesignInputs): DesignResult {
   )
 
   // ── 温升 ──
-  // 由等效外表面积与对流换热系数估算：
-  //   A_s ≈ 6·Ve^(2/3)（球等效）；h 按散热条件取值：
-  //     自然对流 15 / 风扇吹拂 40 / 强制风冷 80  W/(m²·K)（含辐射的量级）
-  //   Rth = 1/(h·A_s) ⇒ ΔT = Ploss · Rth
-  // ⚠️ 未计入「磁芯 → 引脚 → PCB 铜箔」的导热路径，故对小功率磁件偏保守（实际温升通常更低）。
-  //    ΔT 超过 150 K 时已超出本模型可信范围（材料早已失效），工具会直接限幅显示。
-  const surfaceAreaCm2 = 6 * Math.pow(Math.max(inputs.coreVe, 0.1), 2 / 3)
+  // ΔT = P_magnetic · Rth，Rth = 1/(h·A_s)
+  //
+  // ① 只算**磁体自身发热**（铁损 + 绕组铜损）。
+  //    MOSFET 的导通/关断损耗发热在芯片结上、整流损耗在整流器件上，
+  //    算进磁芯温升会凭空替半导体背 1~2 W —— 这是本工具此前的错误。
+  // ② A_s ≈ 14·Ve^(2/3)：EE 型磁芯的实测拟合系数。
+  //    立方体等效是 6·V^(2/3)、球是 4.84·V^(2/3)，但 EE 磁芯扁平且带窗口内壁，
+  //    同体积下表面积显著更大。校核：EE34A（Ve=7.8 cm³）→ 14×3.93 ≈ 55 cm²，
+  //    与其外形 34×34×24 mm 的实际外表面（≈56 cm²）吻合。
+  // ③ 仍未计入「磁芯→引脚→PCB 铜箔」的导热路径，故对小功率磁件仍偏保守。
+  //    ΔT > 150 K 时线性外推已无物理意义，UI 会限幅显示。
+  const surfaceAreaCm2 = 14 * Math.pow(Math.max(inputs.coreVe, 0.1), 2 / 3)
   const H_MAP: Record<string, number> = { natural: 15, fan: 40, forced: 80 }
   const H_CONV = H_MAP[inputs.coolingMode] ?? 15
   const rth = 1 / (H_CONV * surfaceAreaCm2 * 1e-4)
-  const tempRiseC = lossOut.totalLoss * rth
+  const tempRiseC = lossOut.magneticLoss * rth
 
   // ── 10. 诊断 ──
   const feasible =

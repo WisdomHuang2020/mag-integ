@@ -115,7 +115,7 @@ export default function Designer() {
               <Field label="Q 降额系数" value={inputs.qMargin} onChange={(v) => update('qMargin', v)} step={0.01} />
             </Row>
             <Select
-              label="散热条件（决定温升估算的换热系数）"
+              label="散热条件（决定磁体温升的换热系数）"
               value={inputs.coolingMode}
               onChange={(v) => update('coolingMode', v as DesignInputs['coolingMode'])}
               options={[
@@ -403,7 +403,7 @@ export default function Designer() {
                   <span className="tabular font-medium text-emerald-400">{(r.efficiency * 100).toFixed(2)} %</span>
                 </div>
                 <div className="flex justify-between text-[12px]">
-                  <span className="text-neutral-300">温升估算</span>
+                  <span className="text-neutral-300">磁体温升（仅铁损 + 铜损）</span>
                   <span className={`tabular font-medium ${r.tempRiseC > 150 ? 'text-rose-400' : 'text-neutral-200'}`}>
                     {fmtTemp(r.tempRiseC)}
                   </span>
@@ -443,7 +443,10 @@ export default function Designer() {
               <Info size={14} className="mt-0.5 shrink-0 text-neutral-500" />
               <p className="text-[11px] text-neutral-500 leading-relaxed">
                 本页只算磁件。气隙公式为理想磁路式（未计边缘效应），漏感为二维矩形绕组解析近似，
-                温升用等效外表面积单热阻估算（h ≈ 15 W/m²·K）。定型前请用有限元复核漏感与磁密分布。
+                温升只按<strong className="text-neutral-400">磁体自身发热</strong>（铁损 + 绕组铜损）估算，
+                开关管与整流损耗发热在各自器件上，不计入磁芯温升；
+                散热面积按 EE 型磁芯拟合（A_s ≈ 14·Ve^(2/3)），未做热网络分层。
+                定型前请用有限元复核漏感与磁密分布。
               </p>
             </div>
           </Card>

@@ -145,7 +145,7 @@ export default function Report() {
           </table>
           <div className="mt-3 grid grid-cols-2 gap-3">
             <Metric label="预估效率" value={`${(r.efficiency * 100).toFixed(2)} %`} />
-            <Metric label="温升估算（自然对流 h≈15 W/m²K）" value={fmtTemp(r.tempRiseC)} />
+            <Metric label="磁体温升（仅铁损+铜损）" value={fmtTemp(r.tempRiseC)} />
           </div>
         </Section>
 
