@@ -1,7 +1,7 @@
 {
   "name": "magnetic-llc-design-tool",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "磁集成 LLC 变压器设计工具 —— 磁路分配、气隙与漏感设计、匝数与损耗核算",
   "type": "module",
   "scripts": {

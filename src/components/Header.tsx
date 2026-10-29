@@ -57,10 +57,11 @@ export default function Header() {
           href="https://www.llc.power-knowledge.tech"
           target="_blank"
           rel="noreferrer"
-          className="ml-3 hidden xl:flex items-center gap-1 text-[11px] text-text-muted hover:text-primary-light transition-colors shrink-0"
+          className="ml-3 hidden xl:inline-flex items-center gap-1.5 rounded-lg border border-accent/60 bg-accent/15 px-3 py-1.5 text-[12px] font-semibold text-accent shadow-[0_0_14px_-3px_rgba(245,158,11,0.45)] hover:bg-accent hover:text-neutral-950 hover:border-accent hover:shadow-[0_0_20px_-2px_rgba(245,158,11,0.6)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-200 shrink-0"
           title="LLC 电路设计与理论推导请用参考站"
         >
-          LLC 电路设计 <ExternalLink className="w-3 h-3" />
+          LLC 电路设计
+          <ExternalLink size={13} />
         </a>
 
         <button
@@ -98,7 +99,7 @@ export default function Header() {
               href="https://www.llc.power-knowledge.tech"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-text-muted hover:text-primary-light"
+              className="mt-1 flex items-center gap-3 rounded-md border border-accent/40 bg-accent/10 px-3 py-2.5 text-sm font-medium text-accent hover:bg-accent/20"
             >
               <ExternalLink className="w-5 h-5" />
               LLC 电路设计（参考站）
